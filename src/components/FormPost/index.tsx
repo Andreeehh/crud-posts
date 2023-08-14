@@ -3,7 +3,6 @@ import * as Styled from './styles';
 import React, { useState } from 'react';
 import { Button } from '../Button';
 import { TextInput } from '../TextInput';
-import { Checkbox } from '../CheckBox';
 import { RadioButton } from '../RadioButton';
 import { Label } from '../CheckBox/styles';
 import { HtmlContent } from '../HtmlContent';
@@ -20,14 +19,19 @@ import { SimpleDialog } from '../SimpleDialog';
 import { Authors } from '../../types/Authors';
 import { Category } from '../../types/Category';
 import { Tag } from '../../types/SingleTag';
-import { Metadata } from '../../types/Metadata';
+import { CheckboxItem } from 'components/CheckBoxItem';
+import { randomInt } from 'utils/math-utils';
+import { ImageUpload } from 'components/ImageUpload';
 
 export type FormPostProps = {
   onSave?: (post: CreateStrapiPost) => Promise<void>;
   onCreateMetadata?: (
     displayName: string,
     type: number,
-  ) => Promise<{ author: Author } | { category: Category } | { tag: Tag }>;
+  ) => Promise<Author | Category | Tag>;
+  onCreateNewImage?: (
+    file: File | null,
+  ) => Promise<{ id: number; url: string } | null>;
   post?: StrapiPost;
   authors: Authors;
   categories: Categories;
@@ -41,6 +45,7 @@ export const FormPost = ({
   categories,
   tags,
   onCreateMetadata,
+  onCreateNewImage,
 }: FormPostProps) => {
   const { attributes, id = '' } = post || {};
   let title = '';
@@ -55,7 +60,7 @@ export const FormPost = ({
     title = attributes.title;
     content = attributes.content;
     except = attributes.except;
-    authorId = parseInt(attributes.author.id);
+    authorId = parseInt(attributes.author.data.id);
     categoriesFromPost = attributes.categories.data.map((cat) => cat.id);
     tagsFromPost = attributes.tags.data.map((tag) => tag.id);
     coverId = parseInt(attributes.cover.data.id);
@@ -107,6 +112,15 @@ export const FormPost = ({
   const [shouldFocusExcerpt, setShouldFocusExcerpt] = useState(false);
   const [shouldFocusContent, setShouldFocusContent] = useState(false);
   const [selectedTag, setSelectedTag] = useState('');
+
+  const [selectedImageFileId, setSelectedImageFileId] = useState(null);
+
+  const handleAfterImageUpload = (fileId, coverUrl) => {
+    coverData.attributes.url = coverUrl;
+    setSelectedImageFileId(fileId);
+    console.log('fileId', fileId);
+    console.log('selectedImageFileId', selectedImageFileId);
+  };
 
   const handleTagSelection = (selectedTag) => {
     setSelectedTag(selectedTag);
@@ -243,6 +257,11 @@ export const FormPost = ({
       return;
     }
 
+    if (selectedImageFileId) {
+      coverId = selectedImageFileId;
+      console.log('coverId', coverId);
+    }
+
     const newPost = {
       id,
       attributes: {
@@ -290,9 +309,8 @@ export const FormPost = ({
     setSavingAuthor(true);
 
     if (onCreateMetadata) {
-      const metadata = await onCreateMetadata(newAuthorName, 1);
-      if ('author' in metadata) {
-        const author = metadata.author;
+      const author = await onCreateMetadata(newAuthorName, 1);
+      if (author) {
         authors.data.push(author);
       }
     }
@@ -324,10 +342,9 @@ export const FormPost = ({
     setSavingCategory(true);
 
     if (onCreateMetadata) {
-      const metadata = await onCreateMetadata(newAuthorName, 1);
-      if ('category' in metadata) {
-        const category = metadata.category;
-        categories.data.push(category);
+      const category = await onCreateMetadata(newCategoryName, 2);
+      if (category) {
+        authors.data.push(category);
       }
     }
     setCreateNewCategory(false);
@@ -357,9 +374,8 @@ export const FormPost = ({
     setSavingTag(true);
 
     if (onCreateMetadata) {
-      const metadata = await onCreateMetadata(newAuthorName, 1);
-      if ('tag' in metadata) {
-        const tag = metadata.tag;
+      const tag = await onCreateMetadata(newTagName, 3);
+      if (tag) {
         tags.data.push(tag);
       }
     }
@@ -396,9 +412,6 @@ export const FormPost = ({
       />
       <Styled.ComboBoxDiv>
         <Label>Capa do post</Label>
-        <StyledButton.Button onClick={handleAddTagClick} color="primary">
-          {coverData ? 'Editar Capa' : 'Adicionar Capa'}
-        </StyledButton.Button>
       </Styled.ComboBoxDiv>
       {coverData && (
         <Cover
@@ -410,6 +423,10 @@ export const FormPost = ({
           }
         />
       )}
+      <ImageUpload
+        handleImageUpload={onCreateNewImage}
+        handleAfterImageUpload={handleAfterImageUpload}
+      ></ImageUpload>
       {!isPreview && (
         <Styled.ComboBoxDiv>
           <HtmlTagsComboBox onSelectTag={handleTagSelection}></HtmlTagsComboBox>
@@ -579,38 +596,3 @@ export const FormPost = ({
     </form>
   );
 };
-
-export type CheckBoxItemProps = {
-  item: Metadata;
-  isChecked: boolean;
-  onCheckboxChange: (id: string, isChecked: boolean) => void;
-  firstItem: boolean;
-};
-
-const CheckboxItem = ({
-  item,
-  isChecked,
-  onCheckboxChange,
-  firstItem,
-}: CheckBoxItemProps) => {
-  const handleCheckboxChange = (e) => {
-    onCheckboxChange(item.id, e);
-  };
-
-  return (
-    <Checkbox
-      key={item.id}
-      label={item.attributes.displayName}
-      name={item.attributes.displayName}
-      checked={isChecked}
-      onCheckboxChange={handleCheckboxChange}
-      firstItem={firstItem}
-    />
-  );
-};
-
-function randomInt(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}

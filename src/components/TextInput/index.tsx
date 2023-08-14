@@ -59,7 +59,6 @@ export const TextInput = ({
           placeholder={label}
           errorMessage={errorMessage}
           as={as}
-          defaultValue={value}
           readOnly={readOnly}
           value={value}
         />

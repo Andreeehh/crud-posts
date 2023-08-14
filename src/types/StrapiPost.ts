@@ -1,4 +1,4 @@
-import { Author } from './Author';
+import { AuthorData } from './Author';
 import { Categories } from './Categories';
 import { StrapiImage } from './StrapiImage';
 import { Tags } from './Tags';
@@ -14,6 +14,6 @@ export type StrapiPost = {
     tags: Tags;
     createdAt?: string;
     categories: Categories;
-    author: Author;
+    author: AuthorData;
   };
 };

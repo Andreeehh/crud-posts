@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       props: {
         session,
-        authors: authors.data,
+        authors,
         categories,
         tags,
       },
