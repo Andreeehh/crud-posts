@@ -19,6 +19,8 @@ export default function LoginPage() {
     });
 
     console.log(response);
+    console.log(process.env.JWT_SIGNING_PRIVATE_KEY);
+    console.log(process.env.NEXT_AUTH_SECRET);
 
     if (!response.ok) {
       setError('Usuário ou senha inválidos');
