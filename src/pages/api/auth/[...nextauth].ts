@@ -42,6 +42,8 @@ export default NextAuth({
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
+        console.log(process.env.JWT_SIGNING_PRIVATE_KEY);
+        console.log(process.env.NEXT_AUTH_SECRET);
         try {
           const { email, password } = credentials;
           const { login } = await gqlClient.request<LoginResponse>(
