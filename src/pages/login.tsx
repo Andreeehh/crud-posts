@@ -18,6 +18,8 @@ export default function LoginPage() {
       redirect: false,
     });
 
+    console.log(response);
+
     if (!response.ok) {
       setError('Usuário ou senha inválidos');
       return;
