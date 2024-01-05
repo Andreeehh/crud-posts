@@ -244,7 +244,7 @@ export const FormPost = ({
       setShouldFocusContent(true);
       return;
     }
-    if (authorId === 0) {
+    if (parseInt(selectedAuthorValue) === 0) {
       setErrorMessage('Adicione um autor');
       return;
     }

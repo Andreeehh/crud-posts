@@ -20,9 +20,9 @@ export const SimpleDialog = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      {/* <Button variant="contained" color="primary" onClick={handleOpen}>
         Abrir Diálogo
-      </Button>
+      </Button> */}
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Meu Diálogo</DialogTitle>
