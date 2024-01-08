@@ -55,13 +55,7 @@ export const FormPost = ({
   let categoriesFromPost: string[] = [];
   let tagsFromPost: string[] = [];
   let coverId = randomInt(10, 369);
-  const [coverData, setCoverData] = useState({
-    id: '',
-    attributes: {
-      alternativeText: '',
-      url: '',
-    },
-  });
+
   if (attributes) {
     title = attributes.title;
     content = attributes.content;
@@ -70,15 +64,25 @@ export const FormPost = ({
     categoriesFromPost = attributes.categories.data.map((cat) => cat.id);
     tagsFromPost = attributes.tags.data.map((tag) => tag.id);
     coverId = parseInt(attributes.cover.data.id);
-    setCoverData({
-      id: attributes.cover.data.id,
-      attributes: {
-        alternativeText: attributes.cover.data.attributes.alternativeText,
-        url: attributes.cover.data.attributes.url,
-      },
-    });
   }
 
+  const [coverData, setCoverData] = useState(
+    attributes
+      ? {
+          id: attributes.cover.data.id,
+          attributes: {
+            alternativeText: attributes.cover.data.attributes.alternativeText,
+            url: attributes.cover.data.attributes.url,
+          },
+        }
+      : {
+          id: '',
+          attributes: {
+            alternativeText: '',
+            url: '',
+          },
+        },
+  );
   const [newTitle, setNewTitle] = useState(attributes ? title : '');
   const [newExcerpt, setNewExcerpt] = useState(attributes ? except : '');
   const [newContent, setNewContent] = useState(
