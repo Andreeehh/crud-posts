@@ -168,8 +168,48 @@ export function UpdatePostTemplate({
       console.log('No file selected.');
       return;
     }
-    console.log(file);
-    return;
+
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`, // if authentication is required
+          },
+        },
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        if (Array.isArray(result) && result.length > 0) {
+          const uploadResult = result[0]; // Get the first element of the array
+          if (uploadResult.id) {
+            console.log('Upload successful. URL:', uploadResult.url);
+            return {
+              id: uploadResult.id as number,
+              url: uploadResult.url as string,
+            };
+          } else {
+            console.error('Upload result does not contain an id.');
+            return null;
+          }
+        } else {
+          console.error('Upload result is not in the expected format.');
+          return null;
+        }
+      } else {
+        console.error('Upload failed');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return null;
+    }
   };
 
   return (

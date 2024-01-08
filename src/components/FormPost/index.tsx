@@ -71,15 +71,15 @@ export const FormPost = ({
   const [newContent, setNewContent] = useState(
     attributes
       ? content
-      : `<h1>Insira o conteúdo do Título aqui</h1>
-  <p>Insira o conteúdo do parágrafo aqui</p>
-  <figure class="image"><img src="https://images.unsplash.com/photo-1682685796965-9814afcbff55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Insira o alternativeText aqui" ><figcaption>Insira o alternativeText aqui</figcaption></figure><a href='Insira a url do link aqui'>Insira o texto do link aqui</a><strong>Insira o conteúdo em negrito aqui</strong><i>Insira o conteúdo em itálico aqui</i>
+      : `<h1></h1>
+  <p></p>
+  <figure class="image"><a href='https://blog-project-kappa-one.vercel.app/post/'>Post corrected by ChatGPT</a>
   <ol>
-  <li>Primeiro item da lista</li>
-  <li>Segundo item da lista</li>
-  <li>Terceiro item da lista</li>
-  <li>Quarto item da lista</li>
-  <li>Quinto item da lista</li>
+  <li>Primeiro</li>
+  <li>Segundo</li>
+  <li>Terceiro</li>
+  <li>Quarto</li>
+  <li>Quinto</li>
   </ol>`,
   );
   const [saving, setSaving] = useState(false);
@@ -162,15 +162,10 @@ export const FormPost = ({
     }
     switch (selectedTag) {
       case 'parágrafo':
-        setNewContent(
-          newContent + '<p>Insira o conteúdo do parágrafo aqui</p>',
-        );
+        setNewContent(newContent + '<p>Contenti</p>');
         break;
       case 'link':
-        setNewContent(
-          newContent +
-            '<a href="Insira a url do link aqui">Insira o texto do link aqui</a>',
-        );
+        setNewContent(newContent + '<a href="">Post corrected by ChatGPT</a>');
         break;
       case 'imagem':
         setNewContent(
@@ -189,7 +184,7 @@ export const FormPost = ({
       case 'lista':
         setNewContent(
           newContent +
-            `<ol>\n<li>Primeiro item da lista</li>\n<li>Segundo item da lista</li>\n<li>Terceiro item da lista</li>\n<li>Quarto item da lista</li>\n<li>Quinto item da lista</li>\n</ol>`,
+            `<ol>\n<li>Primeiro</li>\n<li>Segundo</li>\n<li>Terceiro</li>\n<li>Quarto</li>\n<li>Quinto</li>\n</ol>`,
         );
         break;
 
@@ -387,7 +382,7 @@ export const FormPost = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <SimpleDialog></SimpleDialog>
+      {/* <SimpleDialog></SimpleDialog> */}
       <TextInput
         name="post-title"
         label="Post title"
