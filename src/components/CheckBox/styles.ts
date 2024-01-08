@@ -7,7 +7,6 @@ export const Wrapper = styled.div<{
     display: flex;
     align-items: center;
     margin-bottom: ${theme.spacings.large};
-
   `}
 `;
 
@@ -28,6 +27,13 @@ export const StyledCheckBox = styled.div<{
     justify-content: center;
     align-items: center;
     margin-right: ${theme.spacings.xsmall};
+    transition: all 0.3s ease-in-out;
+
+    &:active {
+      background-color: ${
+        !checked && !disabled ? theme.colors.gray1 : 'inherit'
+      };
+    }
 
     ${
       checked &&

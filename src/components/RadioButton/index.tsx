@@ -40,7 +40,11 @@ export const RadioButton: React.FC<RadioButtonProps> = ({
         onChange={handleChange}
       />
       <Styled.StyledRadioButton checked={checked} disabled={disabled}>
-        {checked && <span>&#9679;</span>}
+        {checked && (
+          <Styled.Bullet checked={checked} disabled={disabled}>
+            ●
+          </Styled.Bullet>
+        )}
       </Styled.StyledRadioButton>
       <Styled.Label htmlFor={name}>{label}</Styled.Label>
     </Styled.RadioButtonWrapper>

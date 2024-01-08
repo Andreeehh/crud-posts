@@ -7,7 +7,7 @@ export const RadioButtonWrapper = styled.div<{
   align-items: center;
   margin-bottom: ${({ theme }) => theme.spacings.large};
   /* Apply margin-top to the first item */
-  ${(props) => props.firstItem && 'margin-top: 1rem;'}
+  ${(props) => props.firstItem && 'margin-top: 2rem;'}
 `;
 
 export const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
@@ -30,11 +30,15 @@ export const StyledRadioButton = styled.div<{
     align-items: center;
     margin-right: ${theme.spacings.xsmall};
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:active {
+      border-color: ${!checked && !disabled ? theme.colors.gray1 : 'inherit'};
+    }
 
     ${
       checked &&
       css`
-      background: ${theme.colors.primary};
       border-color: ${theme.colors.primary};
     `
     }
@@ -54,5 +58,21 @@ export const Label = styled.label`
   ${({ theme }) => css`
     font-size: ${theme.font.sizes.normal};
     color: ${theme.colors.gray6};
+  `}
+`;
+
+export const Bullet = styled.span<{
+  checked: boolean;
+  disabled: boolean;
+}>`
+  ${({ theme, checked, disabled }) => css`
+    color: ${theme.colors.primary};
+    transition: all 0.3s ease-in-out;
+
+    &:active {
+      background-color: ${
+        !checked && !disabled ? theme.colors.gray1 : 'inherit'
+      };
+    }
   `}
 `;
