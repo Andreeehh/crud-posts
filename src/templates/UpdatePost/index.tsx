@@ -165,7 +165,6 @@ export function UpdatePostTemplate({
 
   const handleImageUpload = async (file) => {
     if (!file) {
-      console.log('No file selected.');
       return;
     }
 
@@ -189,7 +188,6 @@ export function UpdatePostTemplate({
         if (Array.isArray(result) && result.length > 0) {
           const uploadResult = result[0]; // Get the first element of the array
           if (uploadResult.id) {
-            console.log('Upload successful. URL:', uploadResult.url);
             return {
               id: uploadResult.id as number,
               url: uploadResult.url as string,

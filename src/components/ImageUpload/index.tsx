@@ -14,6 +14,7 @@ export const ImageUpload = ({
   handleAfterImageUpload,
 }: ImageUploadProps) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [savingImage, setSavingImage] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -22,19 +23,25 @@ export const ImageUpload = ({
 
   const handleUploadClick = async (event: React.FormEvent) => {
     event.preventDefault();
+    setSavingImage(true);
     const { id, url } = await handleImageUpload(selectedFile);
     if (id) {
       handleAfterImageUpload(id, url);
     } else {
       handleAfterImageUpload(null, null);
     }
+    setSavingImage(false);
   };
 
   return (
     <Styled.Wrapper>
       <Styled.Input type="file" onChange={handleFileChange} />
-      <StyledButton.Button onClick={handleUploadClick} color="primary">
-        Enviar Imagem
+      <StyledButton.Button
+        onClick={handleUploadClick}
+        color="primary"
+        disabled={savingImage}
+      >
+        {savingImage ? 'Enviando...' : 'Enviar Imagem'}
       </StyledButton.Button>
     </Styled.Wrapper>
   );

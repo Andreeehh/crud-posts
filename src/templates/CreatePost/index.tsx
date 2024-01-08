@@ -137,6 +137,51 @@ export function CreatePostTemplate({
     return null;
   };
 
+  const handleImageUpload = async (file) => {
+    if (!file) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('files', file);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`, // if authentication is required
+          },
+        },
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        if (Array.isArray(result) && result.length > 0) {
+          const uploadResult = result[0]; // Get the first element of the array
+          if (uploadResult.id) {
+            return {
+              id: uploadResult.id as number,
+              url: uploadResult.url as string,
+            };
+          } else {
+            return null;
+          }
+        } else {
+          return null;
+        }
+      } else {
+        console.error('Upload failed');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return null;
+    }
+  };
+
   return (
     <Wrapper>
       <FormPost
@@ -145,6 +190,7 @@ export function CreatePostTemplate({
         categories={categories}
         tags={tags}
         onCreateMetadata={handleSaveNewMetaData}
+        onCreateNewImage={handleImageUpload}
       />
     </Wrapper>
   );

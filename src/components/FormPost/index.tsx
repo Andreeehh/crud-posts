@@ -55,7 +55,13 @@ export const FormPost = ({
   let categoriesFromPost: string[] = [];
   let tagsFromPost: string[] = [];
   let coverId = randomInt(10, 369);
-  const coverData = attributes?.cover?.data;
+  const [coverData, setCoverData] = useState({
+    id: '',
+    attributes: {
+      alternativeText: '',
+      url: '',
+    },
+  });
   if (attributes) {
     title = attributes.title;
     content = attributes.content;
@@ -64,6 +70,13 @@ export const FormPost = ({
     categoriesFromPost = attributes.categories.data.map((cat) => cat.id);
     tagsFromPost = attributes.tags.data.map((tag) => tag.id);
     coverId = parseInt(attributes.cover.data.id);
+    setCoverData({
+      id: attributes.cover.data.id,
+      attributes: {
+        alternativeText: attributes.cover.data.attributes.alternativeText,
+        url: attributes.cover.data.attributes.url,
+      },
+    });
   }
 
   const [newTitle, setNewTitle] = useState(attributes ? title : '');
@@ -73,14 +86,14 @@ export const FormPost = ({
       ? content
       : `<h1></h1>
   <p></p>
-  <figure class="image"><a href='https://blog-project-kappa-one.vercel.app/post/'>Post corrected by ChatGPT</a>
   <ol>
   <li>Primeiro</li>
   <li>Segundo</li>
   <li>Terceiro</li>
   <li>Quarto</li>
   <li>Quinto</li>
-  </ol>`,
+  </ol>
+  <a href='https://blog-project-kappa-one.vercel.app/post/'>Post corrected by ChatGPT</a>`,
   );
   const [saving, setSaving] = useState(false);
   const [savingAuthor, setSavingAuthor] = useState(false);
@@ -116,10 +129,28 @@ export const FormPost = ({
   const [selectedImageFileId, setSelectedImageFileId] = useState(null);
 
   const handleAfterImageUpload = (fileId, coverUrl) => {
-    coverData.attributes.url = coverUrl;
+    setCoverData((prevCoverData) => {
+      if (!prevCoverData) {
+        // Se coverData for nulo, inicializa com um objeto padrão
+        return {
+          id: '',
+          attributes: {
+            alternativeText: '',
+            url: coverUrl,
+          },
+        };
+      }
+
+      // Atualiza apenas a propriedade url mantendo os outros atributos
+      return {
+        ...prevCoverData,
+        attributes: {
+          ...prevCoverData.attributes,
+          url: coverUrl,
+        },
+      };
+    });
     setSelectedImageFileId(fileId);
-    console.log('fileId', fileId);
-    console.log('selectedImageFileId', selectedImageFileId);
   };
 
   const handleTagSelection = (selectedTag) => {
@@ -254,7 +285,6 @@ export const FormPost = ({
 
     if (selectedImageFileId) {
       coverId = selectedImageFileId;
-      console.log('coverId', coverId);
     }
 
     const newPost = {
@@ -408,7 +438,7 @@ export const FormPost = ({
       <Styled.ComboBoxDiv>
         <Label>Capa do post</Label>
       </Styled.ComboBoxDiv>
-      {coverData && (
+      {coverData.attributes.url && (
         <Cover
           src={coverData.attributes.url}
           alt={
