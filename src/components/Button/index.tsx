@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import * as Styled from './styles';
+import { useSession } from 'next-auth/client';
 
 export type ButtonProps = {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ export const Button = ({
   icon,
   color = 'primary',
 }: ButtonProps) => {
+  const [session] = useSession();
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -23,7 +25,11 @@ export const Button = ({
   };
 
   return (
-    <Styled.Button disabled={disabled} onClick={handleClick} color={color}>
+    <Styled.Button
+      disabled={disabled || session?.user?.name == 'Visitor'}
+      onClick={handleClick}
+      color={color}
+    >
       {children}
       {!!icon && icon}
     </Styled.Button>

@@ -6,7 +6,7 @@ export const HomeTemplate = () => {
 
   return (
     <Wrapper>
-      <h1>Olá {session?.user?.name || 'ninguém'}</h1>
+      <h1>Hello {session?.user?.name || 'ninguém'}</h1>
     </Wrapper>
   );
 };

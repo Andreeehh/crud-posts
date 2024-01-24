@@ -22,6 +22,7 @@ import { Tag } from '../../types/SingleTag';
 import { CheckboxItem } from 'components/CheckBoxItem';
 import { randomInt } from 'utils/math-utils';
 import { ImageUpload } from 'components/ImageUpload';
+import { useSession } from 'next-auth/client';
 
 export type FormPostProps = {
   onSave?: (post: CreateStrapiPost) => Promise<void>;
@@ -47,6 +48,7 @@ export const FormPost = ({
   onCreateMetadata,
   onCreateNewImage,
 }: FormPostProps) => {
+  const [session] = useSession();
   const { attributes, id = '' } = post || {};
   let title = '';
   let content = '';
@@ -522,7 +524,7 @@ export const FormPost = ({
               <StyledButton.Button
                 onClick={handleSaveAuthor}
                 color="primary"
-                disabled={savingAuthor}
+                disabled={savingAuthor || session?.user?.name == 'Visitor'}
               >
                 {savingAuthor ? 'Adicionando...' : 'Adicionar'}
               </StyledButton.Button>
@@ -563,7 +565,7 @@ export const FormPost = ({
               <StyledButton.Button
                 onClick={handleSaveCategory}
                 color="primary"
-                disabled={savingCategory}
+                disabled={savingCategory || session?.user?.name == 'Visitor'}
               >
                 {savingCategory ? 'Adicionando...' : 'Adicionar'}
               </StyledButton.Button>
@@ -601,7 +603,7 @@ export const FormPost = ({
               <StyledButton.Button
                 onClick={handleSaveTag}
                 color="primary"
-                disabled={savingTag}
+                disabled={savingTag || session?.user?.name == 'Visitor'}
               >
                 {savingTag ? 'Adicionando...' : 'Adicionar'}
               </StyledButton.Button>

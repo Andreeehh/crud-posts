@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Email } from '@styled-icons/material-outlined/Email';
 import { Password } from '@styled-icons/material-outlined/Password';
-
+import * as StyledButton from '../Button/styles';
 import { TextInput } from '../TextInput';
 import * as Styled from './styles';
 import { Button } from '../Button';
@@ -27,11 +27,17 @@ export const FormLogin = ({ errorMessage, onLogin }: FormLoginProps) => {
     setLoading(false);
   };
 
+  const onClickVisitorButton = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setEmail('visitor@email.com');
+    setPassword('visitor@email.com');
+  };
+
   return (
     <Styled.Wrapper onSubmit={handleSubmit}>
       <TextInput
         name="user-identifier"
-        label="Seu e-mail"
+        label="E-mail"
         onInputChange={(v) => setEmail(v)}
         value={email}
         icon={<Email />}
@@ -39,7 +45,7 @@ export const FormLogin = ({ errorMessage, onLogin }: FormLoginProps) => {
       />
       <TextInput
         name="user-password"
-        label="Sua senha"
+        label="Password"
         onInputChange={(v) => setPassword(v)}
         value={password}
         icon={<Password />}
@@ -51,7 +57,10 @@ export const FormLogin = ({ errorMessage, onLogin }: FormLoginProps) => {
       )}
 
       <Styled.ButtonWrapper>
-        <Button disabled={loading}>{loading ? 'Aguarde...' : 'Entrar'}</Button>
+        <Button disabled={loading}>{loading ? 'Wait...' : 'Login'}</Button>
+        <StyledButton.Button onClick={onClickVisitorButton} color="primary">
+          Login as Visitor
+        </StyledButton.Button>
       </Styled.ButtonWrapper>
     </Styled.Wrapper>
   );

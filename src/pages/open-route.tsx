@@ -9,9 +9,9 @@ export default function OpenRoutePage() {
       <h1>Essa rota é aberta</h1>
 
       {session?.user?.name ? (
-        <p>Olá {session.user.name}.</p>
+        <p>Hello {session.user.name}.</p>
       ) : (
-        <p>Olá, você ainda não fez login.</p>
+        <p>Hello, você ainda não fez login.</p>
       )}
     </Wrapper>
   );

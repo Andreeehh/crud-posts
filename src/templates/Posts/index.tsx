@@ -35,7 +35,7 @@ export function PostsTemplate({ posts = [] }: PostsTemplateProps) {
 
       setStatePosts((s) => s.filter((p) => p.id !== id));
     } catch (e) {
-      alert('Não foi possível excluir este post');
+      alert('Não foi possível delete este post');
     }
 
     setDeleting(false);
@@ -43,7 +43,7 @@ export function PostsTemplate({ posts = [] }: PostsTemplateProps) {
 
   return (
     <Wrapper>
-      <h1>Olá {session?.user?.name || 'ninguém'}</h1>
+      <h1>Hello {session?.user?.name || 'ninguém'}</h1>
 
       {statePosts.map((p) => (
         <p key={'post-' + p.id}>
@@ -51,8 +51,11 @@ export function PostsTemplate({ posts = [] }: PostsTemplateProps) {
             <a>{p.attributes.title}</a>
           </Link>{' '}
           |{' '}
-          <button onClick={() => handleDelete(p.id)} disabled={deleting}>
-            Excluir
+          <button
+            onClick={() => handleDelete(p.id)}
+            disabled={deleting || session?.user?.name == 'Visitor'}
+          >
+            Delete
           </button>
         </p>
       ))}

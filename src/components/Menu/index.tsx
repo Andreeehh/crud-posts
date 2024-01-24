@@ -39,7 +39,7 @@ export const Menu = () => {
 
       {session ? (
         <a href="#" onClick={handleClick}>
-          Sair
+          Logout
         </a>
       ) : (
         <Link

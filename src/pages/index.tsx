@@ -7,7 +7,7 @@ export default function Index() {
 
   return (
     <Wrapper>
-      <h1>Olá {session?.user?.name || ''}</h1>
+      <h1>Hello {session?.user?.name || ''}</h1>
     </Wrapper>
   );
 }
