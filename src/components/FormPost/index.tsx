@@ -198,27 +198,27 @@ export const FormPost = ({
       setNewContent(newContent + '\n');
     }
     switch (selectedTag) {
-      case 'parágrafo':
+      case 'paragraph':
         setNewContent(newContent + '<p>Contenti</p>');
         break;
       case 'link':
         setNewContent(newContent + '<a href="">Post corrected by ChatGPT</a>');
         break;
-      case 'imagem':
+      case 'image':
         setNewContent(
           newContent +
-            `<figure class="image"><img src="Insira a url da imagem aqui" alt="Insira o alternativeText aqui" ><figcaption>Insira o alternativeText aqui</figcaption></figure>`,
+            `<figure class="image"><img src="Insira a url da image aqui" alt="Insira o alternativeText aqui" ><figcaption>Insira o alternativeText aqui</figcaption></figure>`,
         );
         break;
-      case 'negrito':
+      case 'bold':
         setNewContent(
-          newContent + '<strong>Insira o conteúdo em negrito aqui</strong>',
+          newContent + '<strong>Insira o conteúdo em bold aqui</strong>',
         );
         break;
-      case 'itálico':
-        setNewContent(newContent + '<i>Insira o conteúdo em itálico aqui</i>');
+      case 'italic':
+        setNewContent(newContent + '<i>Insira o conteúdo em italic aqui</i>');
         break;
-      case 'lista':
+      case 'list':
         setNewContent(
           newContent +
             `<ol>\n<li>Primeiro</li>\n<li>Segundo</li>\n<li>Terceiro</li>\n<li>Quarto</li>\n<li>Quinto</li>\n</ol>`,
@@ -226,7 +226,7 @@ export const FormPost = ({
         break;
 
       default:
-        setNewContent(newContent + '<h1>Insira o conteúdo do Título aqui</h1>');
+        setNewContent(newContent + '<h1>Insira o conteúdo do Title aqui</h1>');
         break;
     }
     setShouldFocusContent(true);
@@ -262,7 +262,7 @@ export const FormPost = ({
     const tagsIdIntArray = tagsIds.map((str) => parseInt(str, 10));
 
     if (newTitle.length === 0) {
-      setTitleErrorMessage('Adicione um título');
+      setTitleErrorMessage('Adicione um title');
       setShouldFocusTitle(true);
       return;
     }
@@ -442,7 +442,7 @@ export const FormPost = ({
         hasFocus={shouldFocusExcerpt}
       />
       <Styled.ComboBoxDiv>
-        <Label>Capa do post</Label>
+        <Label>Post cover</Label>
       </Styled.ComboBoxDiv>
       {coverData.attributes.url && (
         <Cover
@@ -463,7 +463,7 @@ export const FormPost = ({
           <HtmlTagsComboBox onSelectTag={handleTagSelection}></HtmlTagsComboBox>
           <Styled.ButtonComboBoxDiv>
             <StyledButton.Button onClick={handleAddTagClick} color="primary">
-              {'Adicionar Tag HTML ao texto'}
+              {'Add HTML tag to text'}
             </StyledButton.Button>
           </Styled.ButtonComboBoxDiv>
         </Styled.ComboBoxDiv>
@@ -475,8 +475,8 @@ export const FormPost = ({
           color="primary"
           disabled={newContent.length === 0}
         >
-          {isPreview ? 'Editar' : 'Visualizar'}
-          {' Conteúdo'}
+          {isPreview ? 'Edit' : 'Visualize'}
+          {' Content'}
         </StyledButton.Button>
       </Styled.ButtonDiv>
       {!isPreview && (
@@ -504,7 +504,7 @@ export const FormPost = ({
       <Styled.Grid>
         <Styled.GridContent>
           <Styled.GridHeader>
-            <Label>Autores</Label>
+            <Label>Authors</Label>
             <AddButton onClick={handlePlusAuthorClick}>
               <PlusIcon />
             </AddButton>
@@ -513,7 +513,7 @@ export const FormPost = ({
             <>
               <TextInput
                 name="new-author"
-                label="Novo autor"
+                label="New author"
                 value={newAuthorName}
                 onInputChange={(v) => {
                   setNewAuthorName(v);
@@ -526,7 +526,7 @@ export const FormPost = ({
                 color="primary"
                 disabled={savingAuthor || session?.user?.name == 'Visitor'}
               >
-                {savingAuthor ? 'Adicionando...' : 'Adicionar'}
+                {savingAuthor ? 'Adding...' : 'Add'}
               </StyledButton.Button>
             </>
           )}
@@ -545,7 +545,7 @@ export const FormPost = ({
         </Styled.GridContent>
         <Styled.GridContent>
           <Styled.GridHeader>
-            <Label>Categorias</Label>
+            <Label>Categories</Label>
             <AddButton onClick={handlePlusCategoryClick}>
               <PlusIcon />
             </AddButton>
@@ -554,7 +554,7 @@ export const FormPost = ({
             <>
               <TextInput
                 name="new-Category"
-                label="Nova categoria"
+                label="New category"
                 value={newCategoryName}
                 onInputChange={(v) => {
                   setNewCategoryName(v);
@@ -567,7 +567,7 @@ export const FormPost = ({
                 color="primary"
                 disabled={savingCategory || session?.user?.name == 'Visitor'}
               >
-                {savingCategory ? 'Adicionando...' : 'Adicionar'}
+                {savingCategory ? 'Adding...' : 'Add'}
               </StyledButton.Button>
             </>
           )}
@@ -592,7 +592,7 @@ export const FormPost = ({
             <>
               <TextInput
                 name="new-Tag"
-                label="Nova tag"
+                label="New tag"
                 value={newTagName}
                 onInputChange={(v) => {
                   setNewTagName(v);
@@ -605,7 +605,7 @@ export const FormPost = ({
                 color="primary"
                 disabled={savingTag || session?.user?.name == 'Visitor'}
               >
-                {savingTag ? 'Adicionando...' : 'Adicionar'}
+                {savingTag ? 'Adding...' : 'Add'}
               </StyledButton.Button>
             </>
           )}
@@ -622,7 +622,7 @@ export const FormPost = ({
       </Styled.Grid>
 
       <Button type="submit" disabled={saving}>
-        {saving ? 'Salvando...' : 'Salvar'}
+        {saving ? 'Saving...' : 'Save'}
       </Button>
     </form>
   );

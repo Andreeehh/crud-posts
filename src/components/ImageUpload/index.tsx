@@ -41,7 +41,7 @@ export const ImageUpload = ({
         color="primary"
         disabled={savingImage}
       >
-        {savingImage ? 'Enviando...' : 'Enviar Imagem'}
+        {savingImage ? 'Sending...' : 'Send Image'}
       </StyledButton.Button>
     </Styled.Wrapper>
   );

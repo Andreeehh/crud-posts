@@ -6,13 +6,13 @@ export type HtmlTagsComboBoxProps = {
 
 export const HtmlTagsComboBox = ({ onSelectTag }: HtmlTagsComboBoxProps) => {
   const tags = [
-    'título',
-    'parágrafo',
+    'title',
+    'paragraph',
     'link',
-    'imagem',
-    'negrito',
-    'itálico',
-    'lista',
+    'image',
+    'bold',
+    'italic',
+    'list',
   ];
 
   const handleTagSelection = (selectedTag) => {
@@ -21,7 +21,7 @@ export const HtmlTagsComboBox = ({ onSelectTag }: HtmlTagsComboBoxProps) => {
 
   return (
     <ComboBox
-      label="Selecione uma tag html para inserir no texto"
+      label="Insert html tag"
       name="tags"
       options={tags}
       errorMessage=""
