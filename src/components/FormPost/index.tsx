@@ -15,7 +15,6 @@ import { Author } from '../../types/Author';
 import { Categories } from '../../types/Categories';
 import { Tags } from '../../types/Tags';
 import { Cover } from '../Cover';
-import { SimpleDialog } from '../SimpleDialog';
 import { Authors } from '../../types/Authors';
 import { Category } from '../../types/Category';
 import { Tag } from '../../types/SingleTag';
